@@ -67,6 +67,15 @@ kernel /kernel root=/dev/ram0 init=/linuxrc ramdisk=8192 real_root=LABEL=OSBD_ro
 initrd /initramfs
 EOF
 
+echo "Creating marker file for the installer to find the correct root partition..."
+cat > "${runtimeRoot}/boot/osbd-boot-partition.txt" << EOF
+Don't remove me!
+
+This is required for grub to detect the boot partition
+during the setup phase.
+EOF
+chmod 0644 "${runtimeRoot}/boot/osbd-boot-partition.txt"
+
 echo "Setting initial 'root' password"
 echo "root:admin" | chroot "${runtimeRoot}" chpasswd
 
