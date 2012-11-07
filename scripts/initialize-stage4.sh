@@ -37,6 +37,10 @@ fi
 
 # TODO: find a better way to deploy this configuration
 echo "Writing /boot/grub/grub.conf..."
+
+mkdir -p "${runtimeRoot}/boot/grub"
+chmod 0755 "${runtimeRoot}"/boot{,/grub}
+
 cat > "${runtimeRoot}/boot/grub/grub.conf" << EOF
 # Boot automatically after 10 secs.
 timeout 10
