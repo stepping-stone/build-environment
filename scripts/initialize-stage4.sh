@@ -97,4 +97,8 @@ done
 echo "Registering initial crontab..."
 chroot "${runtimeRoot}" crontab /etc/crontab
 
+echo "Create temp directories for apache/php..."
+mkdir -p "${runtimeRoot}"/var/tmp/apache2-php5/{sessions,soap,uploads}
+chmod -R 0770 "${runtimeRoot}/var/tmp/apache2-php5"
+chroot "${runtimeRoot}" chown -R apache\: /var/tmp/apache2-php5
 
