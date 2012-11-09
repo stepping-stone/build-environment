@@ -102,3 +102,12 @@ mkdir -p "${runtimeRoot}"/var/tmp/apache2-php5/{sessions,soap,uploads}
 chmod -R 0770 "${runtimeRoot}/var/tmp/apache2-php5"
 chroot "${runtimeRoot}" chown -R apache\: /var/tmp/apache2-php5
 
+echo "Create service users and groups..."
+chroot "${runtimeRoot}" groupadd -g 3000 -r vm-storage
+chroot "${runtimeRoot}" groupadd -g 110 -r qemu
+chroot "${runtimeRoot}" useradd -c "QEMU system user" -u 107 -g qemu -G vm-storage,kvm -d /dev/null -s /bin/false -M -N qemu
+chroot "${runtimeRoot}" gpasswd -a apache vm-storage
+
+echo "Create /var/virtualization"
+mkdir -p "${runtimeRoot}/var/virtualization"
+
