@@ -31,8 +31,8 @@
 runtimeRoot="/build/runtime-root"
 
 if [ ! -d "${runtimeRoot}" ] ; then
-	echo "ERROR: ${runtimeRoot} does not exist or is not a directory"
-	exit 1
+    echo "ERROR: ${runtimeRoot} does not exist or is not a directory"
+    exit 1
 fi
 
 # TODO: find a better way to deploy this configuration
@@ -78,4 +78,23 @@ chmod 0644 "${runtimeRoot}/boot/osbd-boot-partition.txt"
 
 echo "Setting initial 'root' password"
 echo "root:admin" | chroot "${runtimeRoot}" chpasswd
+
+echo "Creating network device symlinks"
+ln -sf net.lo "${runtimeRoot}/etc/init.d/net.eth0"
+ln -sf net.lo "${runtimeRoot}/etc/init.d/net.vmbr0"
+
+echo "Registering services in the boot runlevel..."
+for s in lvm ; do
+    chroot "${runtimeRoot}" rc-update add "${s}" boot
+done
+
+echo "Registering services in the default runlevel..."
+for s in dcron net.eth0 ntp-client ntpd sshd syslog-ng ; do
+    chroot "${runtimeRoot}" rc-update add "${s}" default
+done
+
+
+echo "Registering initial crontab..."
+chroot "${runtimeRoot}" crontab /etc/crontab
+
 
