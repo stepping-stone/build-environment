@@ -28,7 +28,8 @@
 #
 #
 
-WORKDIR="/build/sysresccd"
+buildRoot="/build"
+sysresccdRoot="${buildRoot}/sysresccd"
 
 if [ ${UID} -ne 0 ] ; then
     echo "You have to be superuser"
@@ -43,12 +44,12 @@ fi
 ISO_VOLUME="foss-cloud-installer"
 FOSS_CLOUD_VERSION="${1}"
 
-mkdir -p "${WORKDIR}/isofile"
+mkdir -p "${buildRoot}/isofile"
 
-rm -f "${WORKDIR}/isofile/${ISO_VOLUME}-${FOSS_CLOUD_VERSION}.iso"
+rm -f "${buildRoot}/isofile/${ISO_VOLUME}-${FOSS_CLOUD_VERSION}.iso"
 
 mkisofs -J -l \
-    -o "${WORKDIR}/isofile/${ISO_VOLUME}-${FOSS_CLOUD_VERSION}.iso" \
+    -o "${buildRoot}/isofile/${ISO_VOLUME}-${FOSS_CLOUD_VERSION}.iso" \
     -b isolinux/isolinux.bin \
     -c isolinux/boot.cat \
     -input-charset utf-8 \
@@ -56,7 +57,7 @@ mkisofs -J -l \
     -boot-load-size 4 \
     -boot-info-table \
     -V "${ISO_VOLUME}" \
-    "${WORKDIR}/customcd/isoroot"
+    "${sysresccdRoot}/customcd/isoroot"
 
-chmod a+r "${WORKDIR}/isofile/${ISO_VOLUME}-${FOSS_CLOUD_VERSION}.iso"
+chmod a+r "${buildRoot}/isofile/${ISO_VOLUME}-${FOSS_CLOUD_VERSION}.iso"
 

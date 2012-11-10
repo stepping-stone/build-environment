@@ -28,17 +28,18 @@
 #
 #
 
-WORKDIR="/build/sysresccd"
+buildRoot="/build"
+sysresccdRoot="${buildRoot}/sysresccd"
 
 if [ ${UID} != 0 ] ; then
     echo "You have to be superuser"
     exit 1
 fi
 
-rm -f "${WORKDIR}/customcd/isoroot/sysrcd.dat"
+rm -f "${sysresccdRoot}/customcd/isoroot/sysrcd.dat"
 
 mksquashfs \
-    "${WORKDIR}/customcd/files/" \
-    "${WORKDIR}/customcd/isoroot/sysrcd.dat" \
+    "${sysresccdRoot}/customcd/files/" \
+    "${sysresccdRoot}/customcd/isoroot/sysrcd.dat" \
     -comp xz 
 
