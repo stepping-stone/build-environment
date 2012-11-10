@@ -35,7 +35,12 @@ sysresccdISORoot="${buildRoot}/sysresccd/customcd/isoroot/"
 stage4TarPath="${buildRoot}/foss-cloud-stage4.tar"
 stage4TarBzPath="${sysresccdISORoot}/stages/foss-cloud-stage4.tar.bz2"
 
-read -p "FOSS-Cloud version: " fosscloudVersion
+if [ $# -ne 1 ] ; then
+    echo "Usage: $0 <foss-cloud-release:X.Y.Z>"
+    exit 1
+fi
+
+fosscloudVersion=$1
 
 echo "Compressing stage4 tarball..."
 bzip2 -p -c "${stage4TarPath}" > "${stage4TarBzPath}"

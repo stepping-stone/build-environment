@@ -31,7 +31,14 @@
 runtimeRoot="/build/runtime-root"
 stage4TarPath="/build/foss-cloud-stage4.tar"
 
-read -p "FOSS-Cloud version: " fosscloudVersion
+if [ $# -ne 1 ] ; then
+    echo "Usage: $0 <foss-cloud-release:X.Y.Z>"
+    exit 1
+fi
+
+fosscloudVersion=$1
+
+echo "Writing /etc/foss-cloud_version and /etc/os-release..."
 
 echo "${fosscloudVersion}" > "${runtimeRoot}/etc/foss-cloud_version"
 chmod 644 "${runtimeRoot}/etc/foss-cloud_version"
