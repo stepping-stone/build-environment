@@ -53,6 +53,6 @@ chmod 644 "${runtimeRoot}/etc/os-release"
 # not yet configured
 #chroot "${runtimeRoot}" localepurge
 
-cd "${runtimeRoot}"
-tar -cvpf "${stage4TarPath}" --exclude usr/local/portage/packages --exclude usr/portage --exclude .git .
+echo "Creating tarball ${stage4TarPath}..."
+tar -cpf "${stage4TarPath}" -C "${runtimeRoot}" --exclude usr/local/portage/packages --exclude usr/portage --exclude .git .
 
