@@ -41,9 +41,6 @@ DIRS="${DESTINATION_BASEDIR}/iso ${DESTINATION_BASEDIR}/iso-choosable ${DESTINAT
 
 TEMPDIR="$(mktemp -d)"
 
-echo "updating libvirt configuration"
-svn up "${osbdRuntimeRoot}/etc/libvirt"
-
 echo "building new predefined storage tarball in '${TEMPDIR}'"
 
 for dir in ${DIRS} ; do
