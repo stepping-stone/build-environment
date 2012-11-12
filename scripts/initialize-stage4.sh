@@ -113,3 +113,6 @@ chroot "${runtimeRoot}" useradd -c "PowerDNS recursor user" -u 53 -g pdns -d /de
 echo "Create /var/virtualization"
 mkdir -p "${runtimeRoot}/var/virtualization"
 
+echo "Create /var/log/syslog"
+mkdir -p "${runtimeRoot}/var/log/syslog"
+
