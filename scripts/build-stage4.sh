@@ -31,28 +31,17 @@
 runtimeRoot="/build/runtime-root"
 stage4TarPath="/build/foss-cloud-stage4.tar"
 
-if [ $# -ne 1 ] ; then
-    echo "Usage: $0 <foss-cloud-release:X.Y.Z>"
-    exit 1
-fi
+echo "Unmounting possibly mounted bind mounts (and proc) ..."
 
-fosscloudVersion=$1
+mountpoint -q "${runtimeRoot}/proc" && umount "${runtimeRoot}/proc"
 
-echo "Writing /etc/foss-cloud_version and /etc/os-release..."
-
-echo "${fosscloudVersion}" > "${runtimeRoot}/etc/foss-cloud_version"
-chmod 644 "${runtimeRoot}/etc/foss-cloud_version"
-
-cat > "${runtimeRoot}/etc/os-release" << EOF
-NAME=FOSS-Cloud
-VERSION="${fosscloudVersion}"
-ID=foss-cloud
-EOF
-chmod 644 "${runtimeRoot}/etc/os-release"
+for f in /var/portage/packages /usr/local/portage /usr/portage ; do
+	mountpoint -q "${runtimeRoot}${f}" && umount "${runtimeRoot}/${f}"
+done
 
 # not yet configured
 #chroot "${runtimeRoot}" localepurge
 
 echo "Creating tarball ${stage4TarPath}..."
-tar -cpf "${stage4TarPath}" -C "${runtimeRoot}" --exclude usr/local/portage/packages --exclude usr/portage --exclude .git .
+tar -cpf "${stage4TarPath}" -C "${runtimeRoot}" .
 
