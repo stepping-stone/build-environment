@@ -35,12 +35,11 @@ sysresccdISORoot="${buildRoot}/sysresccd/customcd/isoroot/"
 stage4TarPath="${buildRoot}/foss-cloud-stage4.tar"
 stage4TarBzPath="${sysresccdISORoot}/stages/foss-cloud-stage4.tar.bz2"
 
-if [ $# -ne 1 ] ; then
-    echo "Usage: $0 <foss-cloud-release:X.Y.Z>"
-    exit 1
-fi
+echo "Getting FOSS-Cloud version from the stage4 tarball ..."
+eval $(tar -xf "${stage4TarPath}" -O ./etc/os-release)
 
-fosscloudVersion=$1
+fosscloudVersion="${VERSION}"
+echo "  FOSS-Cloud version: ${fosscloudVersion}"
 
 echo "Compressing stage4 tarball..."
 bzip2 -p -c "${stage4TarPath}" > "${stage4TarBzPath}"
@@ -52,7 +51,7 @@ echo "Regenerating the sysresscd environment..."
 "${buildRoot}/scripts/gen_squashfs.sh"
 
 echo "Generate the ISO file..."
-"${buildRoot}/scripts/gen_iso.sh" $fosscloudVersion
+"${buildRoot}/scripts/gen_iso.sh" ${fosscloudVersion}
 
 ls -la "${buildRoot}/isofile/"
 
