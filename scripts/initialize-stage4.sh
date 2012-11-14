@@ -110,9 +110,3 @@ chroot "${runtimeRoot}" gpasswd -a apache vm-storage
 chroot "${runtimeRoot}" groupadd -g 53 -r pdns
 chroot "${runtimeRoot}" useradd -c "PowerDNS recursor user" -u 53 -g pdns -d /dev/null -s /bin/false -M -N pdns
 
-echo "Create /var/virtualization"
-mkdir -p "${runtimeRoot}/var/virtualization"
-
-echo "Create /var/log/syslog"
-mkdir -p "${runtimeRoot}/var/log/syslog"
-
