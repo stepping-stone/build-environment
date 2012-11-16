@@ -36,19 +36,29 @@ if [ ${UID} != 0 ] ; then
     exit 1
 fi
 
+isoPath="${WORKDIR}/${ISO_IMAGE}"
+
+if [ ! -f "${isoPath}" ] ; then
+    echo "ISO file '${isoPath}' does not exist, nothing to unpack ..."
+    exit 1
+fi
+
 mkdir -p "${WORKDIR}"
 
-bsdtar -x --include sysrcd.dat -f "${WORKDIR}/${ISO_IMAGE}" -C "${WORKDIR}"
+bsdtar -x --include sysrcd.dat -f "${isoPath}" -C "${WORKDIR}"
 
 mkdir -p "${WORKDIR}/customcd/isoroot"
 
-bsdtar -x --include isolinux --include version -f "${WORKDIR}/${ISO_IMAGE}" -C "${WORKDIR}/customcd/isoroot"
+bsdtar -x --include isolinux --include version -f "${isoPath}" -C "${WORKDIR}/customcd/isoroot"
 
 for f in bootprog bootdisk ntpasswd usb_inst usb_inst.sh usbstick.htm ; do
-    bsdtar -x --include "${f}" -f "${WORKDIR}/${ISO_IMAGE}" -C "${WORKDIR}/customcd/isoroot"
+    bsdtar -x --include "${f}" -f "${isoPath}" -C "${WORKDIR}/customcd/isoroot"
 done
 
 rm -rf "${WORKDIR}/customcd/files"
 unsquashfs -dest "${WORKDIR}/customcd/files" "${WORKDIR}/sysrcd.dat"
 
+echo "Restoring modified files from Git ..."
+cd "${WORKDIR}"
+git checkout -- .
 
