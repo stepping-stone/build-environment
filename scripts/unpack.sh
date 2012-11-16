@@ -47,6 +47,7 @@ mkdir -p "${WORKDIR}"
 
 bsdtar -x --include sysrcd.dat -f "${isoPath}" -C "${WORKDIR}"
 
+rm -rf "${WORKDIR}/customcd/isoroot"
 mkdir -p "${WORKDIR}/customcd/isoroot"
 
 bsdtar -x --include isolinux --include version -f "${isoPath}" -C "${WORKDIR}/customcd/isoroot"
