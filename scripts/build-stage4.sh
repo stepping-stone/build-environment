@@ -43,5 +43,5 @@ done
 #chroot "${runtimeRoot}" localepurge
 
 echo "Creating tarball ${stage4TarPath}..."
-tar -cpf "${stage4TarPath}" -C "${runtimeRoot}" .
+tar -cpf "${stage4TarPath}" -C "${runtimeRoot}" --exclude=./var/log/emerge.log --exclude=./var/cache/edb .
 
