@@ -56,6 +56,7 @@ mkisofs -J -l \
     -no-emul-boot \
     -boot-load-size 4 \
     -boot-info-table \
+    -rational-rock \
     -V "${ISO_VOLUME}" \
     "${sysresccdRoot}/customcd/isoroot"
 
