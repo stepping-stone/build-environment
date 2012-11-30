@@ -28,8 +28,10 @@
 #
 #
 
-ISO_IMAGE="systemrescuecd-x86-2.3.0.iso"
+SYSRESCCD_V="3.1.1"
+ISO_IMAGE="systemrescuecd-x86-${SYSRESCCD_V}.iso"
 WORKDIR="/build/sysresccd"
+SFMIRROR="http://switch.dl.sourceforge.net"
 
 if [ ${UID} != 0 ] ; then
     echo "You have to be superuser to unpack the sysresccd"
@@ -39,8 +41,8 @@ fi
 isoPath="${WORKDIR}/${ISO_IMAGE}"
 
 if [ ! -f "${isoPath}" ] ; then
-    echo "ISO file '${isoPath}' does not exist, nothing to unpack ..."
-    exit 1
+    echo "ISO file '${isoPath}' does not exist, trying to fetch ..."
+    wget -O "${isoPath}" "${SFMIRROR}/project/systemrescuecd/sysresccd-x86/${SYSRESCCD_V}/${ISO_IMAGE}" || exit 1
 fi
 
 mkdir -p "${WORKDIR}"
