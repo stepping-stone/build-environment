@@ -33,7 +33,7 @@ runtimeRoot="/build/runtime-root"
 TARBALL_PATH="${runtimeRoot}/usr/share/foss-cloud/predefined-storage.tar.bz2"
 DEFAULT_GID="3000"
 DEFAULT_DIR_PERMS="2770"
-VIRTIO_ISO_SRC="/var/portage/distfiles/virtio-win-0.1-22.iso"
+VIRTIO_ISO_SRC="/var/portage/distfiles/virtio-win-0.1-30.iso"
 DESTINATION_BASEDIR="/var/virtualization"
 VIRTIO_ISO_DEST="${DESTINATION_BASEDIR}/iso/85d7e9f5-4288-4a3f-b209-c12ff11c61f3.iso"
 VIRTIO_ISO_PERMS="0644"
@@ -53,6 +53,11 @@ for xml in "${osbdRuntimeRoot}"/etc/libvirt/storage/*.xml ; do
     echo "adding storage pool '${path}'"
     mkdir -p "${TEMPDIR}/${path}"
 done
+
+if [ ! -e "${VIRTIO_ISO_SRC}" ] ; then
+    echo "'${VIRTIO_ISO_SRC}' could not be found. Trying to fetch..."
+    wget -O "${VIRTIO_ISO_SRC}" "http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/$(basename ${VIRTIO_ISO_SRC})" || exit 1
+fi
 
 echo "copying virtio iso image from '${VIRTIO_ISO_SRC}' to '${TEMPDIR}/${VIRTIO_ISO_DEST}'"
 cp "${VIRTIO_ISO_SRC}" "${TEMPDIR}/${VIRTIO_ISO_DEST}"
