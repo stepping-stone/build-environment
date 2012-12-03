@@ -36,12 +36,16 @@ echo "Unmounting possibly mounted bind mounts (and proc) ..."
 mountpoint -q "${runtimeRoot}/proc" && umount "${runtimeRoot}/proc"
 
 for f in /var/portage/packages /usr/local/portage /usr/portage ; do
-	mountpoint -q "${runtimeRoot}${f}" && umount "${runtimeRoot}/${f}"
+    mountpoint -q "${runtimeRoot}${f}" && umount "${runtimeRoot}/${f}"
 done
 
 # not yet configured
 #chroot "${runtimeRoot}" localepurge
 
 echo "Creating tarball ${stage4TarPath}..."
-tar -cpf "${stage4TarPath}" -C "${runtimeRoot}" --exclude=./var/log/emerge.log --exclude=./var/cache/edb .
+tar -cpf "${stage4TarPath}" -C "${runtimeRoot}" \
+    --exclude=./var/log/emerge.log \
+    --exclude=./var/cache/edb/* \
+    --exclude=./etc/config-archive/* \
+    .
 
