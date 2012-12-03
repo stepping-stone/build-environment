@@ -110,3 +110,6 @@ chroot "${runtimeRoot}" gpasswd -a apache vm-storage
 chroot "${runtimeRoot}" groupadd -g 53 -r pdns
 chroot "${runtimeRoot}" useradd -c "PowerDNS recursor user" -u 53 -g pdns -d /dev/null -s /bin/false -M -N pdns
 
+echo "Set /etc/mtab as a symlink to /proc/mounts..."
+ln -sf /proc/mounts "${runtimeRoot}/etc/mtab"
+
