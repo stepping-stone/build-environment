@@ -113,3 +113,21 @@ chroot "${runtimeRoot}" useradd -c "PowerDNS recursor user" -u 53 -g pdns -d /de
 echo "Set /etc/mtab as a symlink to /proc/mounts..."
 ln -sf /proc/mounts "${runtimeRoot}/etc/mtab"
 
+echo "Initializing /usr/portage as an empty Git repository..."
+portageDir="${runtimeRoot}/usr/portage"
+portageBranch="master" # for now
+mountpoint -q "${portageDir}" && umount "${portageDir}"
+pushd "${portageDir}" >/dev/null
+rm -rf .git
+git init
+git commit --allow-empty -m "empty commit to initialize master"
+git remote add -t ${portageBranch} origin https://github.com/FOSS-Cloud/portage.git
+# git checkout -b ${portageBranch}
+cat >> "${portageDir}/.git/config" << EOF
+[branch "${portageBranch}"]
+	remote = origin
+	merge = refs/heads/${portageBranch}
+EOF
+popd >/dev/null
+chroot "${runtimeRoot}" chown -R portage\: /usr/portage
+
