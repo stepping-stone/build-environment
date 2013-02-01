@@ -113,21 +113,33 @@ chroot "${runtimeRoot}" useradd -c "PowerDNS recursor user" -u 53 -g pdns -d /de
 echo "Set /etc/mtab as a symlink to /proc/mounts..."
 ln -sf /proc/mounts "${runtimeRoot}/etc/mtab"
 
-echo "Initializing /usr/portage as an empty Git repository..."
-portageDir="${runtimeRoot}/usr/portage"
-portageBranch="master" # for now
-mountpoint -q "${portageDir}" && umount "${portageDir}"
-pushd "${portageDir}" >/dev/null
-rm -rf .git
-git init
-git commit --allow-empty -m "empty commit to initialize master"
-git remote add -t ${portageBranch} origin https://github.com/FOSS-Cloud/portage.git
-# git checkout -b ${portageBranch}
-cat >> "${portageDir}/.git/config" << EOF
-[branch "${portageBranch}"]
+initializeEmptyGitRepo() {
+    local repoDir=$1
+    local absRepoDir="${runtimeRoot}${repoDir}"
+    local repoURI=$2
+    local repoBranch=$3
+
+    echo "Initializing ${repoDir} as an empty Git repository using branch ${repoBranch}..."
+    mkdir -p "${absRepoDir}"
+    mountpoint -q "${absRepoDir}" && umount "${absRepoDir}"
+    pushd "${absRepoDir}" >/dev/null
+    rm -rf .git
+    git init
+    git commit --allow-empty -m "empty commit to initialize master"
+    git remote add -t "${repoBranch}" origin "${repoURI}"
+    if [ "${repoBranch}" != "master" ] ; then
+        git checkout -b "${repoBranch}"
+    fi
+    cat >> "${absRepoDir}/.git/config" << EOF
+[branch "${repoBranch}"]
 	remote = origin
-	merge = refs/heads/${portageBranch}
+	merge = refs/heads/${repoBranch}
 EOF
-popd >/dev/null
-chroot "${runtimeRoot}" chown -R portage\: /usr/portage
+    popd >/dev/null
+    chroot "${runtimeRoot}" chown -R portage\: "${repoDir}"
+}
+
+FC_BRANCH="master"
+
+initializeEmptyGitRepo "/usr/portage" "https://github.com/FOSS-Cloud/portage.git" "${FC_BRANCH}"
 
