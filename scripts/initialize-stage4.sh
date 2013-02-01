@@ -140,6 +140,25 @@ EOF
 }
 
 FC_BRANCH="master"
+FC_PORTAGE_OVERLAY_URI="https://github.com/FOSS-Cloud/portage-overlay.git"
 
 initializeEmptyGitRepo "/usr/portage" "https://github.com/FOSS-Cloud/portage.git" "${FC_BRANCH}"
+initializeEmptyGitRepo "/var/lib/layman/foss-cloud" "${FC_PORTAGE_OVERLAY_URI}" "${FC_BRANCH}"
+
+cat > "${runtimeRoot}/var/lib/layman/make.conf" << EOF
+PORTDIR_OVERLAY="
+/var/lib/layman/foss-cloud
+\$PORTDIR_OVERLAY
+"
+EOF
+chmod 0644 "${runtimeRoot}/var/lib/layman/make.conf"
+
+overlaysSource="${runtimeRoot}/etc/layman/overlays.xml"
+
+if [ ! -f "${overlaysSource}" ] ; then
+    echo "WARNING: ${overlaysSource} does not exist, falling back to ${overlaysSource##${runtimeRoot}}"
+    overlaysSource="${overlaysSource##${runtimeRoot}}"
+fi
+
+cp -a "${overlaysSource}" "${runtimeRoot}/var/lib/layman/overlays.xml"
 
