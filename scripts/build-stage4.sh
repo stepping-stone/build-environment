@@ -35,7 +35,7 @@ echo "Unmounting possibly mounted bind mounts (and proc) ..."
 
 mountpoint -q "${runtimeRoot}/proc" && umount "${runtimeRoot}/proc"
 
-for f in /var/portage/packages /usr/local/portage /usr/portage ; do
+for f in /var/portage/packages /var/lib/layman/foss-cloud /usr/portage ; do
     mountpoint -q "${runtimeRoot}${f}" && umount "${runtimeRoot}/${f}"
 done
 
