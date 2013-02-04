@@ -139,7 +139,10 @@ EOF
     chroot "${runtimeRoot}" chown -R portage\: "${repoDir}"
 }
 
-FC_BRANCH="master"
+# this should either point to stable branch (1.0/1.2/1.4/...)
+# or "master" if this is the development version.
+# A pre-branch is only valid in the RC-series where there is no stable branch yet.
+FC_BRANCH="1.2-pre"
 FC_PORTAGE_OVERLAY_URI="https://github.com/FOSS-Cloud/portage-overlay.git"
 
 initializeEmptyGitRepo "/usr/portage" "https://github.com/FOSS-Cloud/portage.git" "${FC_BRANCH}"
