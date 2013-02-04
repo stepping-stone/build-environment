@@ -156,12 +156,12 @@ PORTDIR_OVERLAY="
 EOF
 chmod 0644 "${runtimeRoot}/var/lib/layman/make.conf"
 
-overlaysSource="${runtimeRoot}/etc/layman/overlays.xml"
+overlaysSource="${runtimeRoot}/etc/layman/overlays/foss-cloud.xml"
 
 if [ ! -f "${overlaysSource}" ] ; then
     echo "WARNING: ${overlaysSource} does not exist, falling back to ${overlaysSource##${runtimeRoot}}"
     overlaysSource="${overlaysSource##${runtimeRoot}}"
 fi
 
-cp -a "${overlaysSource}" "${runtimeRoot}/var/lib/layman/overlays.xml"
+cp -a "${overlaysSource}" "${runtimeRoot}/var/lib/layman/installed.xml"
 
