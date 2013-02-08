@@ -28,7 +28,7 @@
 #
 #
 
-SYSRESCCD_V="3.1.1"
+SYSRESCCD_V="3.3.0"
 ISO_IMAGE="systemrescuecd-x86-${SYSRESCCD_V}.iso"
 WORKDIR="/build/sysresccd"
 SFMIRROR="http://switch.dl.sourceforge.net"
