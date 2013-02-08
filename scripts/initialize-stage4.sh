@@ -125,10 +125,9 @@ initializeEmptyGitRepo() {
     pushd "${absRepoDir}" >/dev/null
     rm -rf .git
     git init
-    git commit --allow-empty -m "empty commit to initialize master"
     git remote add -t "${repoBranch}" origin "${repoURI}"
     if [ "${repoBranch}" != "master" ] ; then
-        git checkout -b "${repoBranch}"
+        git checkout --orphan "${repoBranch}"
     fi
     cat >> "${absRepoDir}/.git/config" << EOF
 [branch "${repoBranch}"]
