@@ -57,7 +57,7 @@ splashimage=(hd0,0)/grub/foss-cloud-splash.xpm.gz
 # For booting GNU/Linux
 title FOSS-Cloud
 root (hd0,0)
-kernel /kernel root=/dev/ram0 init=/linuxrc ramdisk=8192 real_root=LABEL=OSBD_root video=vesafb:mtrr:3,ywrap vga=792
+kernel /kernel root=/dev/ram0 init=/linuxrc ramdisk=8192 real_root=LABEL=OSBD_root video=vesafb:mtrr:3,ywrap vga=791
 initrd /initramfs
 
 # Fallback
