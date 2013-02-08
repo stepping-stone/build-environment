@@ -38,6 +38,10 @@ if [ ${UID} != 0 ] ; then
     exit 1
 fi
 
+updateMode="no"
+
+[ "$1" = "update" ] && updateMode="yes"
+
 isoPath="${WORKDIR}/${ISO_IMAGE}"
 
 if [ ! -f "${isoPath}" ] ; then
@@ -60,6 +64,14 @@ done
 
 rm -rf "${WORKDIR}/customcd/files"
 unsquashfs -dest "${WORKDIR}/customcd/files" "${WORKDIR}/sysrcd.dat"
+
+if [ "x${updateMode}" = "xyes" ] ; then
+    echo ""
+    echo "Update mode requested. Not updating the sysresccd files from the repository for manual merging."
+    echo "Go to '${WORKDIR}' and run 'git status' to see which files got updated and merge them."
+    echo ""
+    exit 0
+fi
 
 echo "Restoring modified files from Git ..."
 cd "${WORKDIR}"
