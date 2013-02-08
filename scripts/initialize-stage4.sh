@@ -165,3 +165,8 @@ fi
 
 cp -a "${overlaysSource}" "${runtimeRoot}/var/lib/layman/installed.xml"
 
+echo "Cleanup the layman cache, rebuild and copy it..."
+rm /var/lib/layman/cache_* "${runtimeRoot}/var/lib/layman"/cache_*
+/usr/bin/layman -f
+cp -a /var/lib/layman/cache_* "${runtimeRoot}/var/lib/layman"/
+
