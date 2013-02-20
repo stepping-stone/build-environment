@@ -53,7 +53,7 @@ cat > /etc/portage/bashrc << EOF
 # with the real packages. And we want the packages to install their configuration files.
 # On the other hand we don't want the configuration files ending up in the binary packages.
 
-if [ "\${CATEGORY}/\${PN}" != "sys-apps/fc-configuration" ] ; then
+if [[ "\${CATEGORY}/\${PN}" != "sys-apps/sst-syslog-ng-configuration" && "\${CATEGORY}/\${PN}" != "sys-apps/fc-configuration" ]] ; then
         export PKG_INSTALL_MASK="${files}"
 fi
 
@@ -61,7 +61,10 @@ EOF
 chmod 0644 /etc/portage/bashrc
 
 echo "Writing /etc/portage/package.env ..."
-echo "sys-apps/fc-configuration fc-configuration.conf" > /etc/portage/package.env
+cat > /etc/portage/package.env << EOF
+sys-apps/fc-configuration fc-configuration.conf
+sys-apps/sst-syslog-ng-configuration fc-configuration.conf
+EOF
 chmod 0644 "${fcConfigInstallMaskFile}"
 
 echo "Looking up packages you may have to re-install ..."
