@@ -142,9 +142,9 @@ EOF
 # or "master" if this is the development version.
 # A pre-branch is only valid in the RC-series where there is no stable branch yet.
 FC_BRANCH="1.2"
-FC_PORTAGE_OVERLAY_URI="https://github.com/FOSS-Cloud/portage-overlay.git"
+FC_PORTAGE_OVERLAY_URI="https://github.com/stepping-stone/portage-overlay.git"
 
-initializeEmptyGitRepo "/usr/portage" "https://github.com/FOSS-Cloud/portage.git" "${FC_BRANCH}"
+initializeEmptyGitRepo "/usr/portage" "https://github.com/stepping-stone/portage.git" "${FC_BRANCH}"
 initializeEmptyGitRepo "/var/lib/layman/foss-cloud" "${FC_PORTAGE_OVERLAY_URI}" "${FC_BRANCH}"
 
 cat > "${runtimeRoot}/var/lib/layman/make.conf" << EOF
