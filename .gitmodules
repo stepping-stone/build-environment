@@ -6,4 +6,4 @@
 	url = https://github.com/FOSS-Cloud/systemrescuecd
 [submodule "configuration-overlay"]
 	path = configuration-overlay
-	url = https://github.com/FOSS-Cloud/configuration-overlay
+	url = https://github.com/stepping-stone/configuration-overlay
