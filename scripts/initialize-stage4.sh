@@ -89,7 +89,7 @@ for s in lvm ; do
 done
 
 echo "Registering services in the default runlevel..."
-for s in dcron net.eth0 ntp-client ntpd sshd syslog-ng ; do
+for s in dcron net.eth0 ntp-client ntpd sshd syslog-ng ulogd ; do
     chroot "${runtimeRoot}" rc-update add "${s}" default
 done
 
