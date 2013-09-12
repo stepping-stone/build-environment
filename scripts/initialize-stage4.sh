@@ -110,6 +110,11 @@ chroot "${runtimeRoot}" gpasswd -a apache vm-storage
 chroot "${runtimeRoot}" groupadd -g 53 -r pdns
 chroot "${runtimeRoot}" useradd -c "PowerDNS recursor user" -u 53 -g pdns -d /dev/null -s /bin/false -M -N pdns
 
+echo "Crate the default admin group and user..."
+chroot "${runtimeRoot}" groupadd -g 1000 admin
+chroot "${runtimeRoot}" useradd -c "default admin user" -u 1000 -g admin -G wheel -d /home/admin -s /bin/bash -m -N admin
+chroot "${runtimeRoot}" usermod -p '*' admin
+
 echo "Set /etc/mtab as a symlink to /proc/mounts..."
 ln -sf /proc/mounts "${runtimeRoot}/etc/mtab"
 
