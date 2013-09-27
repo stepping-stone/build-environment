@@ -102,6 +102,11 @@ mkdir -p "${runtimeRoot}"/var/tmp/apache2-php5/{sessions,soap,uploads}
 chmod -R 0770 "${runtimeRoot}/var/tmp/apache2-php5"
 chroot "${runtimeRoot}" chown -R apache\: /var/tmp/apache2-php5
 
+echo "Create libvirt qemu-ga channel directory..."
+mkdir -p "${runtimeRoot}"/var/lib/libvirt/qemu/channel/target/
+chmod 770 "${runtimeRoot}"/var/lib/libvirt/qemu/channel/target/
+chroot "${runtimeRoot}" chown root:qemu /var/lib/libvirt/qemu/channel/target/
+
 echo "Create service users and groups..."
 chroot "${runtimeRoot}" groupadd -g 3000 -r vm-storage
 chroot "${runtimeRoot}" groupadd -g 110 -r qemu
