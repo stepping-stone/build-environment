@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 #
+# Copyright (C) 2014 stepping stone GmbH
+#                    Switzerland
+#                    http://www.stepping-stone.ch
+#                    support@stepping-stone.ch
+#
 # Copyright (C) 2012 FOSS-Group
 #                    Germany
 #                    http://www.foss-group.de
@@ -34,6 +39,9 @@ if [ ! -d "${runtimeRoot}" ] ; then
     echo "ERROR: ${runtimeRoot} does not exist or is not a directory"
     exit 1
 fi
+
+echo "Removing grub's (almost) empty device.map if present"
+rm -f "${runtimeRoot}/boot/grub/device.map"
 
 # TODO: find a better way to deploy this configuration
 echo "Writing /boot/grub/grub.conf..."
