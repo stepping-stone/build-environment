@@ -33,7 +33,7 @@ runtimeRoot="/build/runtime-root"
 for f in /var/portage/packages /var/lib/layman/foss-cloud /usr/portage ; do
 	[ -d "${runtimeRoot}${f}" ] || mkdir -p "${runtimeRoot}${f}"
 	mountpoint -q "${runtimeRoot}${f}" || mount --bind "${f}" "${runtimeRoot}/${f}"
-	mountpoint -q "${runtimeRoot}${f}" && mount -o remount,ro "${runtimeRoot}/${f}"
+	mountpoint -q "${runtimeRoot}${f}" && mount -o remount,ro,bind "${runtimeRoot}/${f}"
 done
 
 mountpoint -q "${runtimeRoot}/proc" || mount -t proc none "${runtimeRoot}/proc"
