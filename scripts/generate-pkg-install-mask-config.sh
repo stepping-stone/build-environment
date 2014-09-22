@@ -58,7 +58,7 @@ cat > /etc/portage/bashrc << EOF
 
 if [[ "\${CATEGORY}/\${PN}" != "sys-apps/sst-syslog-ng-configuration"
 	&& "\${CATEGORY}/\${PN}" != "sys-apps/fc-configuration"
-	&& "\${CATEGORY}/\${PN}" != "virtual/foss-cloud" ]] ; then
+	&& "\${CATEGORY}/\${PN}" != "virtual/stoney-cloud" ]] ; then
         export PKG_INSTALL_MASK="${files}"
 fi
 
@@ -69,7 +69,7 @@ echo "Writing /etc/portage/package.env ..."
 cat > /etc/portage/package.env << EOF
 sys-apps/fc-configuration fc-configuration.conf
 sys-apps/sst-syslog-ng-configuration fc-configuration.conf
-virtual/foss-cloud fc-configuration.conf
+virtual/stoney-cloud fc-configuration.conf
 EOF
 chmod 0644 "${fcConfigInstallMaskFile}"
 
