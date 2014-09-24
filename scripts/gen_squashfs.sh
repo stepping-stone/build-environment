@@ -50,3 +50,5 @@ cd ${sysresccdRoot}/customcd/isoroot
 md5sum \
     "sysrcd.dat" > \
     "sysrcd.md5"
+
+cd / > /dev/null
