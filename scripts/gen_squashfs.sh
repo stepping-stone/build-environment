@@ -45,10 +45,10 @@ mksquashfs \
 
 # Create the MD5 hash for the SquashFS file
 
-cd ${sysresccdRoot}/customcd/isoroot
+cd "${sysresccdRoot}/customcd/isoroot"
 
 md5sum \
     "sysrcd.dat" > \
     "sysrcd.md5"
 
-cd / > /dev/null
+cd - > /dev/null
